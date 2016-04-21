@@ -2,4 +2,9 @@
 
 module Bidding = 
 
-    type Bid = unit
+    open IRTB.Payment
+
+    type Bid = {
+        offered: Payment.Payment
+        requested: Payment.Payment
+    }
