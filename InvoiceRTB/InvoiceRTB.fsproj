@@ -53,6 +53,7 @@
     <Compile Include="User.fs" />
     <Compile Include="Bidding.fs" />
     <Compile Include="Program.fs" />
+    <Compile Include="Clearing.fs" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>

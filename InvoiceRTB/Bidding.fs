@@ -8,3 +8,4 @@ module Bidding =
         offered: Payment.Payment
         requested: Payment.Payment
     }
+
