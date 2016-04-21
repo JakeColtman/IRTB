@@ -4,16 +4,19 @@ module User =
     
     open IRTB.Payment
 
+    type Book = Map<Payment.Time, Payment.Amount>
+
     type User = {
         name: string;
-        payments : Payment list
+        book: Book
     }
 
     let add_payment (user: User) (payment: Payment) = 
-        {name = user.name; payments = List.append user.payments [payment]}
+        user.book.Add payment
 
     let create (name: string) : User = 
-        {name = name; payments = []}
+        let book = [] |> Map.ofList
+        {name = name; book =  book}
 
 
 
