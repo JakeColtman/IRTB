@@ -11,8 +11,26 @@ module User =
         book: Book
     }
 
+    type BookUpdateResult = 
+        | Success of User
+        | Failure of string
+
     let add_payment (user: User) (payment: Payment) = 
-        user.book.Add payment
+        Success {user with book = user.book.Add (payment.time, payment.amount)} 
+        
+    let get_value_for_time (user: User) (time: Time) = 
+        user.book.Item time
+
+    let remove_payment (user: User) (payment: Payment) = 
+
+        if (not (user.book.ContainsKey payment.time))
+            then Failure "User doesn't have a payment for that date"
+        else 
+            let update_value = (get_value_for_time user payment.time) - payment.amount
+            if update_value < 0.0 then 
+                Failure "Insufficient funds"
+            else
+                add_payment user {payment with amount = update_value}
 
     let create (name: string) : User = 
         let book = [] |> Map.ofList

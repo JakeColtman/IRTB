@@ -5,7 +5,7 @@ module Payment =
     type Time = int
     type Amount = float
 
-    type Payment = Time * Amount
+    type Payment = {time :Time ; amount: Amount}
 
     let create date (time: Time) (amount: Amount) = 
-        (time, amount)
+        {time = time ; amount = amount}
