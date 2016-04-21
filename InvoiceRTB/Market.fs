@@ -1,6 +1,6 @@
 ﻿namespace IRTB
 
-module Clearing = 
+module Market = 
 
     open IRTB.Bidding
 
