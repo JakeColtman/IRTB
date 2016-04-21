@@ -50,7 +50,7 @@
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Payment.fs" />
     <None Include="App.config" />
-    <Compile Include="Seller.fs" />
+    <Compile Include="User.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <PropertyGroup>
