@@ -9,9 +9,11 @@ module Seller =
         payments : Payment list
     }
 
-    let add_invoice (seller: Seller) (payment: Payment) = 
+    let add_payment (seller: Seller) (payment: Payment) = 
         {name = seller.name; payments = List.append seller.payments [payment]}
 
     let create (name: string) : Seller = 
         {name = name; payments = []}
+
+
 
