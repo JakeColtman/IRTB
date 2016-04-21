@@ -10,3 +10,7 @@ module Clearing =
         bids 
             |> List.maxBy (fun (x : Bid) -> x.offered)
 
+    let average_offer_amount bids = 
+        bids 
+            |> List.averageBy (fun (x : Bid) -> x.offered.amount)
+
