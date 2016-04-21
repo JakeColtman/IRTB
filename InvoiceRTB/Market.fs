@@ -1,4 +1,5 @@
 ﻿namespace IRTB
+#nowarn "40"
 
 module Market = 
 
@@ -14,3 +15,12 @@ module Market =
         bids 
             |> List.averageBy (fun (x : Bid) -> x.offered.amount)
 
+    let market bid_resolution = 
+        MailboxProcessor.Start(fun inbox ->
+
+            let rec loop = async {
+                let! msg = inbox.Receive()
+                printfn "%A" msg
+                return! loop
+                }
+            loop) 
