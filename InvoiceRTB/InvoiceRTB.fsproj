@@ -51,6 +51,7 @@
     <Compile Include="Payment.fs" />
     <None Include="App.config" />
     <Compile Include="User.fs" />
+    <Compile Include="Bidding.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <PropertyGroup>
