@@ -7,3 +7,5 @@ module Payment =
 
     type Payment = Time * Amount
 
+    let create date (time: Time) (amount: Amount) = 
+        (time, amount)
