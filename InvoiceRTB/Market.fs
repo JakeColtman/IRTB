@@ -6,7 +6,7 @@ module Market =
 
     type clear = Bid list -> unit
 
-    let highest_bidder_clearing bids = 
+    let highest_bidder bids = 
         bids 
             |> List.maxBy (fun (x : Bid) -> x.offered)
 
