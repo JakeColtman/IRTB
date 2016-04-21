@@ -2,7 +2,13 @@
 
 module Seller = 
     
-    type Seller = string
+    open IRTB.Payment
+
+    type Seller = {
+        name: string;
+        payments : Payment list
+    }
 
     let create (name: string) : Seller = 
-        name
+        {name = name; payments = []}
+
