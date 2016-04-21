@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Program.fs" />
+    <Compile Include="Payment.fs" />
     <None Include="App.config" />
   </ItemGroup>
   <PropertyGroup>
