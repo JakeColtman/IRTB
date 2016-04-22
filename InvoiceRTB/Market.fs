@@ -19,29 +19,33 @@ module Market =
             |> List.averageBy (fun (x : Bid) -> x.offered.amount)
 
     type Market = {
-        users: string list
+        users: User list
     }
 
-    let message_handler msg = 
-        match msg with 
+    let message_handler message_content = 
+        match message_content with 
             | AddSeller seller -> printfn "%A" "Added seller"
             | AddBuyer buyer -> printfn "%A" "Added buyer"
             | MakeBuyBid bid -> printfn "%A" "Registered a bid to buy"
 
     type MarketMessages () = 
 
-        static let add_user (market: Market) (user: string) = 
+        static let add_user (market: Market) (user: User) = 
             {market with users = List.append market.users [user]}
+
+        static let send_to_users users message = 
+            users
+                |> List.iter (fun (user: User) -> user.connection.send_message message)
 
         static let agent = MailboxProcessor.Start(fun inbox -> 
 
-            let rec messageLoop old_market = async{
+            let rec messageLoop (market : Market) = async{
 
                 let! msg = inbox.Receive()
 
-                message_handler msg
+                send_to_users market.users msg
 
-                return! messageLoop old_market 
+                return! messageLoop market 
                 }
 
             messageLoop {users = []}
