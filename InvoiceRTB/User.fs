@@ -3,12 +3,15 @@
 module User = 
     
     open IRTB.Payment
-
+    open IRTB.Interaction
     type Book = Map<Payment.Time, Payment.Amount>
+
+        
 
     type User = {
         name: string;
-        book: Book
+        book: Book;
+        connection: IRTB.Interaction.ConnectionApi
     }
 
     type BookUpdateResult = 
@@ -34,7 +37,8 @@ module User =
 
     let create (name: string) : User = 
         let book = [] |> Map.ofList
-        {name = name; book =  book}
+        let connection = create_connection
+        {name = name; book =  book; connection = connection}
 
 
 

@@ -44,12 +44,14 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net" />
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Payment.fs" />
     <None Include="App.config" />
+    <Compile Include="Interaction.fs" />
     <Compile Include="User.fs" />
     <Compile Include="Bidding.fs" />
     <Compile Include="Messages.fs" />
