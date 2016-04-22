@@ -52,6 +52,7 @@
     <None Include="App.config" />
     <Compile Include="User.fs" />
     <Compile Include="Bidding.fs" />
+    <Compile Include="Messages.fs" />
     <Compile Include="Market.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
