@@ -6,6 +6,7 @@ module Market =
     open IRTB.Bidding
     open IRTB.Payment
     open IRTB.User
+    open IRTB.Messages
 
     type clear = Bid list -> unit
 
@@ -21,6 +22,12 @@ module Market =
         users: string list
     }
 
+    let message_handler msg = 
+        match msg with 
+            | AddSeller seller -> printfn "%A" "Added seller"
+            | AddBuyer buyer -> printfn "%A" "Added buyer"
+            | MakeBuyBid bid -> printfn "%A" "Registered a bid to buy"
+
     type MarketMessages () = 
 
         static let add_user (market: Market) (user: string) = 
@@ -32,11 +39,9 @@ module Market =
 
                 let! msg = inbox.Receive()
 
-                let new_market = add_user old_market msg
+                message_handler msg
 
-                printfn "%A" new_market
-
-                return! messageLoop new_market 
+                return! messageLoop old_market 
                 }
 
             messageLoop {users = []}

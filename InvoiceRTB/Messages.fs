@@ -7,6 +7,6 @@ module Messages =
 
     type Message = 
         | AddSeller of User
-        | AddedBuyer of User
+        | AddBuyer of User
         | MakeBuyBid of Bid
 

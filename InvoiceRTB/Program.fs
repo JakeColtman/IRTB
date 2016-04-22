@@ -4,8 +4,8 @@ open IRTB.Market
 
 [<EntryPoint>]
 let main argv = 
-    IRTB.Market.MarketMessages.Send "user1"
-    IRTB.Market.MarketMessages.Send "user2"
+    IRTB.Market.MarketMessages.Send (IRTB.Messages.AddBuyer (IRTB.User.create "Test User"))
+   // IRTB.Market.MarketMessages.Send "user2"
     printfn "%A" "here"
     System.Console.ReadLine() |> ignore
     0 // return an integer exit code
