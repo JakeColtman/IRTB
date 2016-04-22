@@ -4,8 +4,8 @@ open IRTB.Market
 
 [<EntryPoint>]
 let main argv = 
-    let market = IRTB.Market.market highest_bidder
-    market.Post "hello"
-    printfn "%A" argv
-    System.Console.ReadLine |> ignore
+    IRTB.Market.MarketMessages.Send "user1"
+    IRTB.Market.MarketMessages.Send "user2"
+    printfn "%A" "here"
+    System.Console.ReadLine() |> ignore
     0 // return an integer exit code

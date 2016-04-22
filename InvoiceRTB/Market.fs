@@ -4,6 +4,8 @@
 module Market = 
 
     open IRTB.Bidding
+    open IRTB.Payment
+    open IRTB.User
 
     type clear = Bid list -> unit
 
@@ -15,12 +17,29 @@ module Market =
         bids 
             |> List.averageBy (fun (x : Bid) -> x.offered.amount)
 
-    let market bid_resolution = 
-        MailboxProcessor.Start(fun inbox ->
+    type Market = {
+        users: string list
+    }
 
-            let rec loop = async {
+    type MarketMessages () = 
+
+        static let add_user (market: Market) (user: string) = 
+            {market with users = List.append market.users [user]}
+
+        static let agent = MailboxProcessor.Start(fun inbox -> 
+
+            let rec messageLoop old_market = async{
+
                 let! msg = inbox.Receive()
-                printfn "%A" msg
-                return! loop
+
+                let new_market = add_user old_market msg
+
+                printfn "%A" new_market
+
+                return! messageLoop new_market 
                 }
-            loop) 
+
+            messageLoop {users = []}
+            )
+
+        static member Send i = agent.Post i

@@ -9,5 +9,4 @@ module Messages =
         | AddSeller of User
         | AddedBuyer of User
         | MakeBuyBid of Bid
-      
 
