@@ -4,6 +4,7 @@
 module Market = 
 
     open IRTB.Bidding
+    open IRTB.UserMessages
     open IRTB.Payment
     open IRTB.User
     open IRTB.Messages
@@ -22,20 +23,28 @@ module Market =
         users: User list
     }
 
-    let message_handler message_content = 
-        match message_content with 
-            | AddSeller seller -> printfn "%A" "Added seller"
-            | AddBuyer buyer -> printfn "%A" "Added buyer"
-            | MakeBuyBid bid -> printfn "%A" "Registered a bid to buy"
-
     type MarketMessages () = 
 
         static let add_user (market: Market) (user: User) = 
             {market with users = List.append market.users [user]}
 
         static let send_to_users users message = 
+            printfn "%A" users
+            printfn "%A" message
             users
                 |> List.iter (fun (user: User) -> user.connection.send_message message)
+
+        static let process_message market message = 
+            match message with 
+                | UserMessage usermessage -> 
+                    send_to_users market.users usermessage
+                    market
+                | SystemMessage systemmessage -> 
+                    match systemmessage with 
+                        | AddSeller x -> 
+                            add_user market x
+                        | AddBuyer x -> 
+                            add_user market x
 
         static let agent = MailboxProcessor.Start(fun inbox -> 
 
@@ -43,9 +52,9 @@ module Market =
 
                 let! msg = inbox.Receive()
 
-                send_to_users market.users msg
+                let updated_market = process_message market msg
 
-                return! messageLoop market 
+                return! messageLoop updated_market 
                 }
 
             messageLoop {users = []}

@@ -4,15 +4,14 @@ module Interaction =
 
     open System.Net.Sockets
     open System
-
-    let send_message (socket: Socket) (message: string) = 
-        async {
-            System.Text.Encoding.ASCII.GetBytes(message)
-                |> socket.Send
-                |> ignore
-            }
-
-    open System.Net.Sockets
+    open IRTB.UserMessages
+//
+//    let send_message (socket: Socket) (message: string) = 
+//        async {
+//            System.Text.Encoding.ASCII.GetBytes(message)
+//                |> socket.Send
+//                |> ignore
+//            }
 
     type InMemoryConnection() = 
         let recieved = new System.Collections.Queue()
@@ -25,7 +24,7 @@ module Interaction =
 
 
     type ConnectionApi = {
-        send_message: string -> unit
+        send_message: UserMessage -> unit
         read: string
     }
 

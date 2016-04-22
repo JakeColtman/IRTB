@@ -7,5 +7,5 @@ module Payment =
 
     type Payment = {time :Time ; amount: Amount}
 
-    let create date (time: Time) (amount: Amount) = 
+    let create (time: Time) (amount: Amount) = 
         {time = time ; amount = amount}
