@@ -61,9 +61,14 @@ module Messages =
 
         processing_funct message
 
-    let convert_message_to_message_content msg = 
-        match msg with 
-            | SystemMessage sys_msg -> 
-                SystemMessage sys_msg
-            | UserMessage user_msg -> 
-                UserMessage user_msg
+    let process_user_message_for_sending from_user message = 
+        {
+            from_user = from_user;
+            content =  UserMessage message
+        }
+
+    let process_system_message_for_sending message = 
+        {
+            from_user = User.create "System";
+            content =  UserMessage message
+        }

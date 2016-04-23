@@ -13,8 +13,8 @@ let main argv =
 //    printfn "%A" "here"
 
     let user = IRTB.User.create "Test User"
-    let msg = IRTB.Messages.convert_message_to_message_content (IRTB.Messages.AddBuyer user)
-    IRTB.MarketPlace.MarketPlace.Send (IRTB.Messages.SystemMessage (IRTB.Messages.AddBuyer user)  )
+    let msg = process_user_message_for_sending user (IRTB.UserMessages.Offer (IRTB.Payment.create (10) (100.0)))
+    IRTB.MarketPlace.MarketPlace.add_to_market_place msg
     //IRTB.Market.MarketMessages.Send (IRTB.Messages.UserMessage ((IRTB.UserMessages.Offer (IRTB.Payment.create (10) (100.0)))))
 
     System.Console.ReadLine() |> ignore

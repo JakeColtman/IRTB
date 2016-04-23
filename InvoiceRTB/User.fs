@@ -4,14 +4,12 @@ module User =
     
     open IRTB.Payment
     open IRTB.Interaction
-    type Book = Map<Payment.Time, Payment.Amount>
-
-        
+    type Book = Map<Payment.Time, Payment.Amount> 
 
     type User = {
         name: string;
         book: Book;
-        connection: IRTB.Interaction.ConnectionApi
+        connection: SendToUser
     }
 
     type BookUpdateResult = 

@@ -3,6 +3,7 @@
 module Payment = 
 
     type Time = int
+    type TimeDifference = int
     type Amount = float
 
     type Payment = {time :Time ; amount: Amount}

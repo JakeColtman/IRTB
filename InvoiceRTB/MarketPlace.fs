@@ -35,5 +35,7 @@ module MarketPlace =
             messageLoop {users = []}
             )
 
-        static member Send i = agent.Post i
+        static member add_to_market_place (message: Message) = agent.Post message
+
+    
 

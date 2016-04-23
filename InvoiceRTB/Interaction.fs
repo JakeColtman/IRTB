@@ -5,13 +5,6 @@ module Interaction =
     open System.Net.Sockets
     open System
     open IRTB.UserMessages
-//
-//    let send_message (socket: Socket) (message: string) = 
-//        async {
-//            System.Text.Encoding.ASCII.GetBytes(message)
-//                |> socket.Send
-//                |> ignore
-//            }
 
     type InMemoryConnection() = 
         let recieved = new System.Collections.Queue()
@@ -23,9 +16,8 @@ module Interaction =
         member this.read = "Im a message"
 
 
-    type user_communication = {
+    type SendToUser = {
         send: UserMessage -> unit
-        read: string
     }
 
     let InMemoryConnectionAPI (connection: InMemoryConnection) = {
@@ -37,18 +29,9 @@ module Interaction =
         let connection = InMemoryConnection()
         InMemoryConnectionAPI connection
 
-    type EventPropogator = Destination
-
-    let rec asyncSendInput (stream : NetworkStream) =
-        async {
-            let input = Console.Read() |> BitConverter.GetBytes
-            input |> Array.iter stream.WriteByte
-            return! asyncSendInput stream
-        }
-
     type UserMailBox (api: user_communication) = 
         member this.api = api
-        member this.outbound_box = MailboxProcessor.Start(fun inbox ->
+        member this.box = MailboxProcessor.Start(fun inbox ->
             async { while true do
 
                         let! (msg : UserMessage) = inbox.Receive()
@@ -58,27 +41,14 @@ module Interaction =
                   }
                 )
 
-        member this.inbound_box = MailboxProcessor.Start(fun inbox ->
-            async { while true do
-
-                        let! (msg : UserMessage) = inbox.Receive()
-                        printfn "%A" "User recieved message"
-                        printfn "%A" msg
-                        api.send msg
-
-                  }
-                )
-
-        member this.send msg = this.outbound_box.Post msg
-        member this.read = "Hello"
+        member this.send msg = this.box.Post msg
 
     let create_user_communication = 
         let low_level_api = create_connection 
-        let mailboxes = new UserMailBox(low_level_api)
-        {
-            read = mailboxes.read;
-            send = mailboxes.send
-        }
+        let box = new UserMailBox(low_level_api)
+        box.send
+
+//Code snippets for implementing low level communication
 
 //
 //
@@ -88,3 +58,19 @@ module Interaction =
 //            do! stream.
 //            do! Async.Sleep 1000.0 // sleep one second
 //    }
+//
+//
+//    let rec asyncSendInput (stream : NetworkStream) =
+//        async {
+//            let input = Console.Read() |> BitConverter.GetBytes
+//            input |> Array.iter stream.WriteByte
+//            return! asyncSendInput stream
+//        }
+
+//
+//    let send_message (socket: Socket) (message: string) = 
+//        async {
+//            System.Text.Encoding.ASCII.GetBytes(message)
+//                |> socket.Send
+//                |> ignore
+//            }
