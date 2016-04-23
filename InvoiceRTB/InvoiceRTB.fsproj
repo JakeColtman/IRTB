@@ -50,12 +50,13 @@
   <ItemGroup>
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="Payment.fs" />
-    <Compile Include="Bidding.fs" />
+    <Compile Include="Exchange.fs" />
     <None Include="App.config" />
     <Compile Include="UserMessages.fs" />
     <Compile Include="Interaction.fs" />
     <Compile Include="User.fs" />
     <Compile Include="Market.fs" />
+    <Compile Include="DomainEvents.fs" />
     <Compile Include="Messages.fs" />
     <Compile Include="MarketPlace.fs" />
     <Compile Include="Program.fs" />

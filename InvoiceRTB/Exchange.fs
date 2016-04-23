@@ -1,10 +1,10 @@
 ﻿namespace IRTB 
 
-module Bidding = 
+module Exchange = 
 
     open IRTB.Payment
 
-    type Bid = {
+    type Exchange = {
         offered: Payment.Payment
         requested: Payment.Payment
     }
