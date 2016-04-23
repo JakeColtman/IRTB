@@ -55,8 +55,9 @@
     <Compile Include="UserMessages.fs" />
     <Compile Include="Interaction.fs" />
     <Compile Include="User.fs" />
-    <Compile Include="Messages.fs" />
     <Compile Include="Market.fs" />
+    <Compile Include="Messages.fs" />
+    <Compile Include="MarketPlace.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <PropertyGroup>
