@@ -18,10 +18,14 @@ module DomainEvents =
         bid: Payment
     }
 
+    type AuctionResult = 
+        | Won of Bid
+        | UnMet
+
     type AuctionEnd = {
         auction_id: int;
         auction_start: AuctionStart;
-        winning_bid: Bid
+        result: AuctionResult
     }
 
 
