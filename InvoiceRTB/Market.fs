@@ -8,18 +8,9 @@ module Market =
     open IRTB.Payment
     open IRTB.User
 
-    type clear = Bid list -> unit
-
-    let highest_bidder bids = 
-        bids 
-            |> List.maxBy (fun (x : Bid) -> x.offered)
-
-    let average_offer_amount bids = 
-        bids 
-            |> List.averageBy (fun (x : Bid) -> x.offered.amount)
-
     type Market = {
         users: User list
+        auctions: Auction list
     }
 
     let add_buyer market buyer = 
