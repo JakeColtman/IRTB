@@ -28,5 +28,10 @@ module DomainEvents =
         result: AuctionResult
     }
 
+    type DomainEvent = 
+        | AuctionStart of AuctionStart
+        | Bid of Bid
+        | AuctionEnd of AuctionEnd
+
 
 

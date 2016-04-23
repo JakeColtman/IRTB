@@ -28,19 +28,27 @@ module Market =
     let add_seller market seller = 
         {market with users = List.append market.users [seller]}
 
-    let process_offer market offer = 
-        printfn "%A" market
-        printfn "%A" offer
+    let inform_all_users market message = 
         market.users
-            |> List.iter (fun (user: User) -> printfn "%A" offer )//user.connection.send_message offer)
+            |> List.iter (fun (user: User) -> user.connection.send message)
+
+    let auction_start market start = 
+        printfn "%A" market
+        printfn "%A" start
+        inform_all_users market start
         market
 
     let process_bid market bid = 
         printfn "%A" market
         printfn "%A" bid
-        market.users
-            |> List.iter (fun (user: User) -> printfn "%A" bid)//user.connection.send_message bid)
         market
+
+    let auction_end market ending = 
+        printfn "%A" market
+        printfn "%A" ending
+        inform_all_users market ending
+        market
+
 
 
 

@@ -52,7 +52,6 @@
     <Compile Include="Payment.fs" />
     <Compile Include="Exchange.fs" />
     <None Include="App.config" />
-    <Compile Include="UserMessages.fs" />
     <Compile Include="Interaction.fs" />
     <Compile Include="User.fs" />
     <Compile Include="Market.fs" />
