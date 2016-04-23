@@ -35,3 +35,10 @@ module Auction =
             | true -> updated_auction
             | false -> {auction with active = false}
             
+    let create (start: AuctionStart) = 
+        {
+            auction_id = start.auction_id;
+            active = true;
+            bids = [];
+            resolution = highest_amount
+        }

@@ -3,14 +3,14 @@
 
 module Market = 
 
-    open IRTB.Bidding
-    open IRTB.UserMessages
+    open IRTB.Auction
+    open IRTB.DomainEvents
     open IRTB.Payment
     open IRTB.User
 
     type Market = {
         users: User list
-        auctions: Auction list
+        auctions: Map<int, Auction>
     }
 
     let add_buyer market buyer = 
@@ -27,12 +27,18 @@ module Market =
         printfn "%A" market
         printfn "%A" start
         inform_all_users market start
-        market
+        let new_auction = Auction.create start
+        {market with auctions = Map.add new_auction.auction_id new_auction market.auctions}
 
-    let process_bid market bid = 
-        printfn "%A" market
-        printfn "%A" bid
-        market
+    let make_bid_on_auction market (bid: Bid) = 
+        if market.auctions.ContainsKey bid.auction_id then 
+            let auction = market.auctions.Item bid.auction_id
+            let update = IRTB.Auction.bid_on_auction auction bid
+            let updated_auctions = Map.add bid.auction_id update market.auctions 
+            {market with auctions = updated_auctions}
+        else 
+            market
+        
 
     let auction_end market ending = 
         printfn "%A" market
