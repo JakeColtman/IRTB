@@ -60,3 +60,10 @@ module Messages =
             message_fold sys_function user_function
 
         processing_funct message
+
+    let convert_message_to_message_content msg = 
+        match msg with 
+            | SystemMessage sys_msg -> 
+                SystemMessage sys_msg
+            | UserMessage user_msg -> 
+                UserMessage user_msg

@@ -38,7 +38,7 @@ module User =
     let create (name: string) : User = 
         let book = [] |> Map.ofList
         let connection = create_connection
-        {name = name; book =  book; connection = connection}
+        {name = name; book =  book; connection = Interaction.create_connection}
 
 
 

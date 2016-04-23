@@ -23,13 +23,13 @@ module Interaction =
         member this.read = "Im a message"
 
 
-    type ConnectionApi = {
-        send_message: UserMessage -> unit
+    type user_communication = {
+        send: UserMessage -> unit
         read: string
     }
 
     let InMemoryConnectionAPI (connection: InMemoryConnection) = {
-        send_message = connection.send_message;
+        send = connection.send_message;
         read = connection.read
     }
 
@@ -45,6 +45,41 @@ module Interaction =
             input |> Array.iter stream.WriteByte
             return! asyncSendInput stream
         }
+
+    type UserMailBox (api: user_communication) = 
+        member this.api = api
+        member this.outbound_box = MailboxProcessor.Start(fun inbox ->
+            async { while true do
+
+                        let! (msg : UserMessage) = inbox.Receive()
+ 
+                        api.send msg
+
+                  }
+                )
+
+        member this.inbound_box = MailboxProcessor.Start(fun inbox ->
+            async { while true do
+
+                        let! (msg : UserMessage) = inbox.Receive()
+                        printfn "%A" "User recieved message"
+                        printfn "%A" msg
+                        api.send msg
+
+                  }
+                )
+
+        member this.send msg = this.outbound_box.Post msg
+        member this.read = "Hello"
+
+    let create_user_communication = 
+        let low_level_api = create_connection 
+        let mailboxes = new UserMailBox(low_level_api)
+        {
+            read = mailboxes.read;
+            send = mailboxes.send
+        }
+
 //
 //
 //    let propogate_events_to_client (client: TcpClient) = async {
